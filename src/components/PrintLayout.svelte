@@ -99,11 +99,11 @@
 			//Preview borders
 			&.preview-borders {
 				.print-page-content {
-					outline: 1px solid pink;
+					outline: 1px solid rgb(255, 117, 244);
 					outline-offset: -0.5px;
 				}
 				.print-cell {
-					outline: 1px dashed blue;
+					outline: 1px dashed rgb(0, 153, 255);
 					outline-offset: -0.5px;
 				}
 				.print-cell-content {
@@ -137,12 +137,12 @@
 					position: relative;
 					display: flex;
 					overflow: hidden;
+					z-index: 10;
 					.error-message {
 						font-size: 12px;
 						position: absolute;
 						color: white;
-						background-color: rgba(255, 0, 0, 0.75);
-						outline: 1px solid red;
+						background-color: rgba(255, 0, 0, 0.6);
 						padding: 0.5em;
 						margin: 0.5em;
 						border-radius: 3px;
