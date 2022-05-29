@@ -16,6 +16,7 @@ const dataStore = () => {
 };
 
 export const data = dataStore();
+export const errors = writable([] as Array<object>);
 export const options = writable(defaultOptions);
 export const state = writable({ rawText: '', useHeaders: true, previewScale: 100 } as {
 	rawText: string;
