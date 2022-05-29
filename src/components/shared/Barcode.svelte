@@ -4,15 +4,14 @@
 
 	export let text: any = '';
 	export let bcid: string = 'code128';
+	let error: any = undefined;
+	export let onRender = (e: any) => {};
 	let canvas: HTMLCanvasElement;
 
 	const render = () => {
+		error = undefined;
 		setTimeout(() => {
 			try {
-				// if (canvas === null) {
-				// 	console.log('canvas null');
-				// 	return;
-				// }
 				canvas.getContext('2d')?.setTransform(1, 0, 0.5, 1, 0, 0.5);
 				toCanvas(canvas, {
 					bcid: bcid,
@@ -20,10 +19,13 @@
 					scale: 1,
 					height: 0
 				});
-			} catch (e) {
+				error = null;
+			} catch (e: any) {
 				canvas.getContext('2d')?.setTransform(1, 0, 0, 1, 0, 0);
 				canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
+				error = e;
 			}
+			onRender(error);
 		});
 	};
 

@@ -166,6 +166,7 @@
 				<div on:click={() => ($state.previewScale = 100)} style="cursor:pointer;font-size: 1.5em;">🔎</div>
 				<StepInput bind:value={$state.previewScale} min={50} max={250} step={10} integer={true} --width="3em" suffix="%" />
 			</div>
+			<!-- <div id="status">{$errors.length}</div> -->
 			<PrintLayout />
 		</div>
 	{:else}

@@ -1,9 +1,10 @@
 <script lang="ts">
-	import { data, options } from '../stores';
+	import { data, errors, options } from '../stores';
 	import Barcode from './shared/Barcode.svelte';
 	console.log($options);
 
 	$: pageSize = $options.gridColumns * $options.gridRows;
+	$: paginatedItems = paginateItems($data.items, pageSize);
 	$: printStyleVars = Object.entries({
 		'--page-width': `${$options.pageWidth}${$options.units}`,
 		'--page-height': `${$options.pageHeight}${$options.units}`,
@@ -30,7 +31,7 @@
 		.join(';');
 
 	const paginateItems = (items: any, pageSize: number): Array<Array<any>> => {
-		let _items = structuredClone(items);
+		let _items = [...items]; //As to not remove the items from the store. Could use slice() here but this looks tighter.
 		let pages = [];
 		while (_items.length) {
 			pages.push(_items.splice(0, pageSize));
@@ -41,21 +42,33 @@
 	const parseHeader = (item: Item, format: string) => {
 		return $data.headers.reduce((s, headerName, i) => s?.replace(`$${headerName}`, item.values[i]), format);
 	};
+
+	//Sets error property on the item in the `data` store. undefined = not rendered yet, null = no error, anything else = bwip.js error
+	const setError = (itemId: number, e: any) => {
+		$errors[itemId] = e;
+	};
 </script>
 
 <div id="print-layout" style={printStyleVars}>
-	{#each paginateItems($data.items, pageSize) as page}
+	{#each paginatedItems as page}
 		<div class="print-page">
 			<div class="print-page-content">
 				{#each page as item}
-					<div class="print-cell">
+					{@const barcodeValue = String(item.values[$options.barcodeValueIndex])}
+					<div class="print-cell" class:error={$errors[item.id]}>
 						<div class="print-cell-content">
 							{#if $options.header.show && $options.header.format != ''}
 								<div class="header">
 									{@html parseHeader(item, $options.header.format)}
 								</div>
 							{/if}
-							<Barcode text={item.values[$options.barcodeValueIndex]} bcid={$options.bcid} />
+							<Barcode
+								text={barcodeValue}
+								bcid={$options.bcid}
+								onRender={(e) => {
+									setError(item.id, e);
+								}}
+							/>
 							{#if $options.footer.show && $options.footer.format != ''}
 								<div class="footer">
 									{@html parseHeader(item, $options.footer.format)}
@@ -112,6 +125,9 @@
 						outline: 1px dashed blue;
 						outline-offset: -0.5px;
 					}
+					&.error {
+						background-color: red;
+					}
 				}
 				.print-cell-content {
 					flex-grow: 1;
@@ -140,14 +156,14 @@
 					.header,
 					.footer {
 						white-space: pre-wrap;
-						&.header {
-							font-size: var(--header-font-size, 10pt);
-							font-family: var(--header-font-family, inherit);
-						}
-						&.footer {
-							font-size: var(--footer-font-size, 10pt);
-							font-family: var(--footer-font-family, inherit);
-						}
+					}
+					.header {
+						font-size: var(--header-font-size, 10pt);
+						font-family: var(--header-font-family, inherit);
+					}
+					.footer {
+						font-size: var(--footer-font-size, 10pt);
+						font-family: var(--footer-font-family, inherit);
 					}
 				}
 			}

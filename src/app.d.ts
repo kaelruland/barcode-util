@@ -7,7 +7,6 @@ declare namespace App {}
 interface Item {
 	id: number;
 	values: Array<string>;
-	error: string | undefined | null;
 }
 
 interface HeaderFooterOptions {
