@@ -65,12 +65,12 @@
 </script>
 
 <div class="step-input" class:disabled on:wheel={handleWheel}>
-	<div class="step-button" on:click={decrement}>－</div>
+	<div class="step-button left" on:click={decrement}>－</div>
 	<input bind:this={input} bind:value={internalValue} on:change={handleChange} />
 	{#if suffix}
 		<div class="suffix" on:click={() => input.focus()}>{suffix}</div>
 	{/if}
-	<div class="step-button" on:click={increment}>＋</div>
+	<div class="step-button right" on:click={increment}>＋</div>
 </div>
 
 <style lang="scss">
@@ -85,6 +85,7 @@
 		}
 		input {
 			outline: none;
+			border-radius: 0;
 			border: 1px solid $input-border-color;
 			text-align: center;
 			width: var(--width, 4em);

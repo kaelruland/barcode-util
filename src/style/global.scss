@@ -18,17 +18,28 @@ textarea {
 	outline: 1px solid $input-border-color;
 	border: none;
 	background-color: white;
+	border-radius: 2px;
 	&[type='checkbox'] {
 		height: auto;
 		padding: 5px;
-		outline: none;
+		outline: none !important;
+	}
+	&:hover {
+		outline: 1px solid darken($input-border-color, 20%);
 	}
 	&:focus {
 		box-shadow: $focus-box-shadow;
 	}
 }
 button {
-	background-color: lightgrey;
+	background-color: rgb(0, 119, 167);
+	color: white;
+	&:hover {
+		filter: brightness(1.1);
+	}
+	&:active {
+		filter: brightness(0.9);
+	}
 }
 
 h1,
