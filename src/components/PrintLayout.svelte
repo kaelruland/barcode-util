@@ -49,12 +49,12 @@
 	};
 </script>
 
-<div id="print-layout" style={printStyleVars}>
+<div id="print-layout" style={printStyleVars} class:preview-borders={true}>
 	{#each paginatedItems as page}
 		<div class="print-page">
 			<div class="print-page-content">
 				{#each page as item}
-					{@const barcodeValue = String(item.values[$options.barcodeValueIndex])}
+					{@const barcodeValue = item.values[$options.barcodeValueIndex]}
 					{@const error = $errors[item.id]}
 					<div class="print-cell" class:error>
 						<div class="print-cell-content">
@@ -92,9 +92,25 @@
 			gap: 2em;
 			width: min-content;
 			margin: 2em auto;
-
+			//Zoom
 			transform: scale(var(--preview-scale, 1));
 			transform-origin: 50% 0;
+
+			//Preview borders
+			&.preview-borders {
+				.print-page-content {
+					outline: 1px solid pink;
+					outline-offset: -0.5px;
+				}
+				.print-cell {
+					outline: 1px dashed blue;
+					outline-offset: -0.5px;
+				}
+				.print-cell-content {
+					outline: 1px dashed #00a500;
+					outline-offset: -0.5px;
+				}
+			}
 		}
 		.print-page {
 			width: var(--page-width, 8.5in);
@@ -117,21 +133,10 @@
 				grid-template-columns: repeat(var(--grid-columns, 1), 1fr);
 				grid-template-rows: repeat(var(--grid-rows, 1), 1fr);
 				grid-auto-flow: var(--grid-auto-flow);
-
-				@media screen {
-					outline: 1px solid pink;
-					outline-offset: -0.5px;
-				}
 				.print-cell {
 					position: relative;
 					display: flex;
 					overflow: hidden;
-					@media screen {
-						outline: 1px dashed blue;
-						outline-offset: -0.5px;
-					}
-					&.error {
-					}
 					.error-message {
 						font-size: 12px;
 						position: absolute;
@@ -150,18 +155,15 @@
 					flex-grow: 1;
 					display: flex;
 					flex-direction: column;
-					align-items: center;
-					justify-content: var(--cell-justify-content, space-between);
+					align-items: stretch;
+					justify-content: var(--cell-justify-content, space-evenly);
 					margin-top: var(--cell-margin-top, 0);
 					margin-right: var(--cell-margin-right, 0);
 					margin-bottom: var(--cell-margin-bottom, 0);
 					margin-left: var(--cell-margin-left, 0);
 					overflow: hidden;
 
-					@media screen {
-						outline: 1px dashed #00a500;
-						outline-offset: -0.5px;
-					}
+					//Barcode dimensions
 					:global(canvas) {
 						height: var(--barcode-height-percent);
 						width: var(--barcode-width-percent);
