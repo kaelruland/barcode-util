@@ -130,6 +130,11 @@
 		</div>
 		<h3>Header/Footer</h3>
 		<div class="group">
+			{#if $options.footer.show || $options.header.show}
+				<div class="format-hints">
+					{$data.headers.map((h) => `$${h}`).join(', ')}, &lt;b&gt;, &lt;i&gt;, &lt;div&gt; etc...
+				</div>
+			{/if}
 			<div class="option">
 				<h4>Header</h4>
 				<input type="checkbox" bind:checked={$options.header.show} />
@@ -150,11 +155,6 @@
 					<div>Format</div>
 					<textarea bind:value={$options.footer.format} placeholder="(none)" />
 					<FontPicker bind:style={$options.footer.style} />
-				</div>
-			{/if}
-			{#if $options.footer.show || $options.header.show}
-				<div class="format-hints">
-					{$data.headers.map((h) => `$${h}`).join(', ')}, &lt;b&gt;, &lt;i&gt;, &lt;div&gt; etc...
 				</div>
 			{/if}
 		</div>
@@ -201,8 +201,6 @@
 			font-family: monospace;
 			font-style: italic;
 			color: dimgrey;
-			padding: 0.5em;
-			outline: 1px solid grey;
 		}
 		textarea {
 			max-width: 100%;

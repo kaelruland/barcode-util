@@ -155,7 +155,7 @@
 					flex-grow: 1;
 					display: flex;
 					flex-direction: column;
-					align-items: stretch;
+					align-items: center;
 					justify-content: var(--cell-justify-content, space-evenly);
 					margin-top: var(--cell-margin-top, 0);
 					margin-right: var(--cell-margin-right, 0);
@@ -175,6 +175,7 @@
 					.header,
 					.footer {
 						white-space: pre-wrap;
+						align-self: stretch;
 					}
 					.header {
 						font-size: var(--header-font-size, 10pt);

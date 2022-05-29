@@ -73,17 +73,18 @@
 </div>
 
 <style lang="scss">
+	@import '../../style/vars.scss';
 	.step-input {
 		display: flex;
 		align-items: stretch;
 		background-color: white;
-		--border: 1px solid lightgrey;
 
 		&:focus-within {
-			box-shadow: 0 0 4px 0px rgba(0, 68, 255);
+			box-shadow: $focus-box-shadow;
 		}
 		input {
-			border: var(--border);
+			outline: none;
+			border: 1px solid $input-border-color;
 			text-align: center;
 			width: var(--width, 4em);
 			max-width: fit-content;
@@ -95,6 +96,7 @@
 
 			&:focus {
 				outline: none;
+				box-shadow: none;
 			}
 		}
 		.step-button {
@@ -122,8 +124,8 @@
 			}
 		}
 		.suffix {
-			border-top: var(--border);
-			border-bottom: var(--border);
+			border-top: 1px solid $input-border-color;
+			border-bottom: 1px solid $input-border-color;
 			display: flex;
 			align-items: center;
 			padding-right: 0.5em;
