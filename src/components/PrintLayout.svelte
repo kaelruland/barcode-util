@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { identity } from 'svelte/internal';
 	import { data, errors, options } from '../stores';
 	import Barcode from './shared/Barcode.svelte';
 	console.log($options);
