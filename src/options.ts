@@ -18,7 +18,7 @@ export const defaultOptions: Options = {
 	barcodeValueIndex: 0,
 	barcodeWidthPercent: 100,
 	barcodeHeightPercent: 50,
-	barcodePreserveAspectRatio: false,
+	barcodePreserveAspectRatio: undefined,
 	header: {
 		show: false,
 		format: '',

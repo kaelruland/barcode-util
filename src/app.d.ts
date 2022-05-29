@@ -38,7 +38,7 @@ interface Options {
 	barcodeValueIndex: number;
 	barcodeWidthPercent: number;
 	barcodeHeightPercent: number;
-	barcodePreserveAspectRatio: boolean;
+	barcodePreserveAspectRatio: 'width' | 'height' | undefined;
 	header: HeaderFooterOptions;
 	footer: HeaderFooterOptions;
 }

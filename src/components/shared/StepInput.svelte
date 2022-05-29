@@ -6,6 +6,7 @@
 	export let integer: boolean | undefined = false;
 	export let round: number | undefined = undefined;
 	export let suffix: string | undefined = undefined;
+	export let disabled: boolean | undefined = false;
 	let initialValue: number = value;
 	let internalValue: number | string = value;
 	let input: HTMLInputElement;
@@ -63,7 +64,7 @@
 	};
 </script>
 
-<div class="step-input" on:wheel={handleWheel}>
+<div class="step-input" class:disabled on:wheel={handleWheel}>
 	<div class="step-button" on:click={decrement}>－</div>
 	<input bind:this={input} bind:value={internalValue} on:change={handleChange} />
 	{#if suffix}
@@ -131,6 +132,13 @@
 			padding-right: 0.5em;
 			color: grey;
 			user-select: none;
+		}
+		&.disabled {
+			filter: contrast(0.75);
+			input {
+				color: grey;
+			}
+			pointer-events: none;
 		}
 	}
 </style>

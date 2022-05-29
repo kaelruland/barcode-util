@@ -20,8 +20,12 @@
 		'--cell-margin-bottom': `${$options.cellMarginBottom}${$options.units}`,
 		'--cell-margin-left': `${$options.cellMarginLeft}${$options.units}`,
 		'--cell-justify-content': `${$options.cellJustifyContent}`,
-		'--barcode-width-percent': `${$options.barcodeWidthPercent}%`,
-		'--barcode-height-percent': `${$options.barcodeHeightPercent}%`,
+		'--barcode-width-percent': `${
+			$options.barcodePreserveAspectRatio == 'height' ? 'unset' : $options.barcodeWidthPercent
+		}%`,
+		'--barcode-height-percent': `${
+			$options.barcodePreserveAspectRatio == 'width' ? 'unset' : $options.barcodeHeightPercent
+		}%`,
 		'--header-font-size': $options.header.style?.fontSize,
 		'--header-font-family': $options.header.style?.fontFamily,
 		'--footer-font-size': $options.footer.style?.fontSize,

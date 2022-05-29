@@ -121,11 +121,35 @@
 			</div>
 			<div class="option">
 				<div>Width</div>
-				<StepInput bind:value={$options.barcodeWidthPercent} min={0} max={100} integer={true} step={5} suffix="%" />
+				<StepInput
+					bind:value={$options.barcodeWidthPercent}
+					min={0}
+					max={100}
+					integer={true}
+					step={5}
+					suffix="%"
+					disabled={$options.barcodePreserveAspectRatio == 'height'}
+				/>
 			</div>
 			<div class="option">
 				<div>Height</div>
-				<StepInput bind:value={$options.barcodeHeightPercent} min={0} max={100} integer={true} step={5} suffix="%" />
+				<StepInput
+					bind:value={$options.barcodeHeightPercent}
+					min={0}
+					max={100}
+					integer={true}
+					step={5}
+					suffix="%"
+					disabled={$options.barcodePreserveAspectRatio == 'width'}
+				/>
+			</div>
+			<div class="option">
+				<div>Preserve aspect ratio</div>
+				<select bind:value={$options.barcodePreserveAspectRatio}>
+					<option value={undefined}>Off</option>
+					<option value={'width'}>based on width</option>
+					<option value={'height'}>based on height</option>
+				</select>
 			</div>
 		</div>
 		<h3>Header/Footer</h3>
