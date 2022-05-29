@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { identity } from 'svelte/internal';
 	import { data, errors, options } from '../stores';
 	import Barcode from './shared/Barcode.svelte';
 	console.log($options);
@@ -55,7 +56,8 @@
 			<div class="print-page-content">
 				{#each page as item}
 					{@const barcodeValue = String(item.values[$options.barcodeValueIndex])}
-					<div class="print-cell" class:error={$errors[item.id]}>
+					{@const error = $errors[item.id]}
+					<div class="print-cell" class:error>
 						<div class="print-cell-content">
 							{#if $options.header.show && $options.header.format != ''}
 								<div class="header">
@@ -75,6 +77,9 @@
 								</div>
 							{/if}
 						</div>
+						{#if error}
+							<div class="error-message">{error}</div>
+						{/if}
 					</div>
 				{/each}
 			</div>
@@ -119,6 +124,7 @@
 					outline-offset: -0.5px;
 				}
 				.print-cell {
+					position: relative;
 					display: flex;
 					overflow: hidden;
 					@media screen {
@@ -126,7 +132,19 @@
 						outline-offset: -0.5px;
 					}
 					&.error {
-						background-color: red;
+					}
+					.error-message {
+						font-size: 12px;
+						position: absolute;
+						color: white;
+						background-color: rgba(255, 0, 0, 0.75);
+						outline: 1px solid red;
+						padding: 0.5em;
+						margin: 0.5em;
+						border-radius: 3px;
+						@media print {
+							display: none;
+						}
 					}
 				}
 				.print-cell-content {

@@ -17,7 +17,7 @@ export const defaultOptions: Options = {
 	bcid: 'code128',
 	barcodeValueIndex: 0,
 	barcodeWidthPercent: 100,
-	barcodeHeightPercent: 100,
+	barcodeHeightPercent: 50,
 	barcodePreserveAspectRatio: false,
 	header: {
 		show: false,
