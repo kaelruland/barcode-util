@@ -1,7 +1,7 @@
 <script lang="ts">
 	import PrintLayout from './PrintLayout.svelte';
 	import StepInput from './shared/StepInput.svelte';
-	import { data, options, state } from '../stores';
+	import { data, errors, options, state } from '../stores';
 	import { bcidOptions } from '../options';
 	import FontPicker from './shared/FontPicker.svelte';
 
@@ -17,6 +17,23 @@
 	};
 
 	let units: string = $options.units;
+	let prevBcid = $options.bcid;
+	let prevBarcodeValueIndex = $options.barcodeValueIndex;
+	errors.set([]);
+
+	$: status = {
+		total: $data.items.length,
+		completed: Object.values($errors).filter((e) => e !== undefined).length,
+		errors: Object.values($errors).filter((e) => e).length
+	};
+
+	$: {
+		if (prevBcid != $options.bcid || prevBarcodeValueIndex != $options.barcodeValueIndex) {
+			prevBcid = $options.bcid;
+			prevBarcodeValueIndex = $options.barcodeValueIndex;
+			errors.set([]);
+		}
+	}
 </script>
 
 <div id="design-page" class="page panels">
@@ -186,11 +203,18 @@
 
 	{#if $data.items.length}
 		<div class="panel preview" style={`--preview-scale:${$state.previewScale / 100}`} on:wheel={handlePreviewScroll}>
-			<div id="preview-scale">
-				<div on:click={() => ($state.previewScale = 100)} style="cursor:pointer;font-size: 1.5em;">🔎</div>
-				<StepInput bind:value={$state.previewScale} min={50} max={250} step={10} integer={true} --width="3em" suffix="%" />
+			<div id="preview-info">
+				<div id="preview-scale">
+					<StepInput bind:value={$state.previewScale} min={50} max={250} step={10} integer={true} --width="3em" suffix="%" />
+					<div on:click={() => ($state.previewScale = 100)} style="cursor:pointer;font-size: 1.5em;">🔎</div>
+				</div>
+				<div id="status" class:error={status.errors} class:noerror={!status.errors && status.completed == status.total}>
+					<span
+						>{`Processed ${status.completed}/${status.total}`}
+						<span>{`(${status.errors} errors)`}</span></span
+					>
+				</div>
 			</div>
-			<!-- <div id="status">{$errors.length}</div> -->
 			<PrintLayout />
 		</div>
 	{:else}
@@ -245,14 +269,35 @@
 		background-attachment: local;
 		background-position: 50% 0;
 
-		#preview-scale {
+		#preview-info {
+			z-index: 100;
+			position: fixed;
+			display: flex;
+			flex-direction: column;
+			gap: 0.5em;
 			margin: 0.5em;
+			filter: opacity(80%);
+		}
+
+		#preview-scale {
 			display: flex;
 			align-items: center;
-			position: fixed;
 			gap: 0.5em;
-			z-index: 100;
 			width: min-content;
+		}
+
+		#status {
+			background-color: rgb(223, 206, 58);
+			padding: 0.5em;
+			border-radius: 3px;
+			&.error {
+				background-color: red;
+				color: white;
+			}
+			&.noerror {
+				background-color: green;
+				color: white;
+			}
 		}
 	}
 </style>
