@@ -29,9 +29,9 @@
 
 	$: {
 		if (prevBcid != $options.bcid || prevBarcodeValueIndex != $options.barcodeValueIndex) {
+			errors.set([]);
 			prevBcid = $options.bcid;
 			prevBarcodeValueIndex = $options.barcodeValueIndex;
-			errors.set([]);
 		}
 	}
 </script>
@@ -227,9 +227,9 @@
 		.group {
 			display: flex;
 			flex-direction: column;
-			gap: 0.5em;
+			gap: 0.25em;
 			padding-left: 1em;
-			margin-bottom: 1em;
+			margin-bottom: 0.5em;
 			border-left: 1px solid lightgrey;
 		}
 		.option {
