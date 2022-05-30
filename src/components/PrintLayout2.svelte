@@ -1,11 +1,9 @@
 <script lang="ts">
-	import App from 'src/App.svelte';
 	import type { SvelteComponent } from 'svelte/internal';
-	export let component: SvelteComponent | undefined = undefined;
-	export let propsList: Array<any> = [];
+	// export let component: any | undefined = undefined;
+	// export let propsList: Array<any> = [];
+	console.log(typeof $$slots, $$slots);
 	let pageSize: number = $$props['--grid-rows'] * $$props['--grid-columns'];
-
-	$: paginatedPropsList = paginateItems(propsList, pageSize);
 	$: printStyleVars = Object.entries({
 		// '--page-width': `${$options.pageWidth}${$options.units}`,
 		// '--page-height': `${$options.pageHeight}${$options.units}`,
@@ -46,13 +44,13 @@
 </script>
 
 <div class="print-layout">
-	{#each paginatedPropsList as page}
+	{#each Object.values($$slots) as page}
 		<div class="print-page">
 			<div class="print-page-content">
-				{#each page as props}
+				{#each page as item}
 					<div class="print-cell">
 						<div class="print-cell-content">
-							<svelte:component this={component} {...props} />
+							<slot />
 						</div>
 					</div>
 				{/each}

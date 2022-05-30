@@ -1,9 +1,11 @@
 <script lang="ts">
 	import PrintLayout from './PrintLayout.svelte';
+	import PrintLayout2 from './PrintLayout2.svelte';
 	import StepInput from './shared/StepInput.svelte';
 	import { data, errors, options, state } from '../stores';
 	import { bcidOptions } from '../options';
 	import FontPicker from './shared/FontPicker.svelte';
+	import Label from './Label.svelte';
 
 	const handlePreviewScroll = (e: WheelEvent) => {
 		if (e.ctrlKey) {
@@ -215,7 +217,11 @@
 					>
 				</div>
 			</div>
-			<PrintLayout />
+			<PrintLayout2>
+				{#each $data.items as item}
+					<Label {item} />
+				{/each}
+			</PrintLayout2>
 		</div>
 	{:else}
 		<div class="panel no-data">Load some data to begin designing</div>
