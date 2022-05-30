@@ -40,7 +40,10 @@ export const defaultOptions: Options = {
 export const bcidOptions = [
 	{ value: 'code128', label: 'Code 128', description: 'General-purpose linear barcode' },
 	{ value: 'code39', label: 'Code 39', description: 'General-purpose linear barcode' },
-	{ value: 'qrcode', label: 'QR Code' }
-];
+	{ value: 'qrcode', label: 'QR Code' },
+	{ value: 'azteccode', label: 'Aztec Code' },
+	{ value: 'code39ext', label: 'Code 39 Extended' },
+	{ value: 'datamatrix', label: 'Datamatrix' }
+].sort((a, b) => (a.label > b.label ? 1 : -1));
 
-export const fontOptions = ['Arial', 'Times New Roman', 'Century Gothic', 'Consolas', 'Courier', 'monospace'];
+export const fontOptions = ['Arial', 'Times New Roman', 'Century Gothic', 'Consolas', 'Courier'];
