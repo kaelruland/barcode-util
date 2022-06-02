@@ -17,7 +17,8 @@ const config = {
 		}),
 		paths: {
 			base: "/barcode-util"
-		}
+		},
+		prerender: {default:true}
 	}
 };
 
